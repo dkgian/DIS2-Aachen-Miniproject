@@ -1,0 +1,84 @@
+.mainscreen{
+    position: relative;
+}
+
+p.banner{
+  font-style: normal;
+  font-size: 35px;
+  font-family: Arial;
+}
+
+p.groupNumber{
+  font-style: normal;
+  font-size: 25px;
+  font-family: Courier;
+}
+.card {
+    display: inline-grid;
+    width: 200px;
+    height: 300px;
+    background-color: #e6e6ed;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 10px;
+    margin : 30px;
+}
+
+.card:hover {
+    box-shadow: 0 80px 100px 0 rgba(0,0,0,0.2);
+}
+
+img {
+    border-radius: 10px 10px 0 0;
+}
+
+.container {
+
+    padding: 1px 15px;
+    margin: 10px;
+    align: center;
+}
+
+.status-icon{
+  width: 20px;
+  height: 20px;
+  margin:1px;
+  align: left;
+}
+
+.status-text{
+  color:#666699;
+  font-style: italic;
+}
+
+img.contact-photo{
+  height: 250px;
+  align-content: center;
+}
+
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
+    display: block; /* Make the buttons appear below each other */
+}
+
+#contact-body{
+  background-color: red;
+  display: inline-block;
+}
+a.normalStatus{
+  font-style: oblique;
+  font-size: 20px;
+  color: blue;
+  padding: 20px;
+}
+a.busyStatus{
+  font-style: oblique;
+  font-size: 20px;
+  color: red;
+  padding: 20px;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<link data-require="bootstrap@3.0.0" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
+
+
+
+</head>
+<body>
+
+<div class="jumbotron">
+  <h2>Welcome screen</h2>
+</div>
+
+<div ng-app="app" ng-controller="userController" class="mainscreen" width= "100%" height="100%">
+
+  <div ng-repeat="user in myData" class="card" ng-click="open(user)" >
+
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>{{user.name}}</b></h4>
+        <div ng-if="user.state==1">
+          <img class="status-icon" src="img/avai.png">
+          <a class="status-text">Available</a>
+        </div>
+        <div ng-if="user.state==2">
+          <img class="status-icon" src="img/busy.png">
+          <a class="status-text">Busy</a>
+        </div>
+        <div ng-if="user.state==3">
+          <img class="status-icon" src="img/notavai.png">
+          <a class="status-text">Not Available</a>
+        </div>
+      </div>
+
+      <!--MODAL WINDOW-->
+      <script type="text/ng-template" id="myModalContent.html">
+          <div class="modal-header">
+              <h2>{{ user.name }}</h2>
+          </div>
+          <div class="modal-body">
+
+            <div style="display:table-cell; vertical-align:middle; text-align:center">
+              <img class="contact-photo" src="https://www.w3schools.com/howto/img_avatar.png"/>
+              CloudID: {{ user.facetimeid }}
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <!--BTNS GROUP -->
+            <div class="btn-group btn-group-justified">
+               <a href="facetime://{{ user.facetimeid }}" class="btn btn-primary">Call</a>
+               <a href="imessage://{{ user.facetimeid }}" class="btn btn-primary">Message</a>
+            </div>
+
+          </div>
+      </script>
+
+  </div>
+</div>
+
+
+<script>
+  var jsonUrl = "http://dis2.prudhvee.com/getlist.php";
+
+  var app = angular.module('app', ['ui.bootstrap']);
+
+app.config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|imessage|facetime):/);
+        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+    }
+]);
+
+  app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, user)
+  {
+    $scope.user = user;
+  });
+
+  app.controller('userController', function($scope, $http, $timeout, $modal, $log) {
+      $http.get(jsonUrl).then(function(response) {
+          $scope.myData = response.data;
+          $scope.open = function (_user) {
+            var modalInstance = $modal.open({
+              controller: "ModalInstanceCtrl",
+              templateUrl: 'myModalContent.html',
+                resolve: {
+                    user: function()
+                    {
+                        return _user;
+                    }
+                }
+             });
+          };
+      });
+  });
+
+
+</script>
+
+
+</body>
+</html>
